@@ -50,13 +50,21 @@ El Poder Discriminativo de la tarifa fue auditado calculando la integración num
 
 El modelo permite una separación eficiente y monótona de los perfiles de riesgo, penalizando correctamente a los peores conductores y subsidiando justamente a los prudentes, como se demuestra en la Curva de Lift del proyecto.
 
-5. Ecuación Comercial Final
+5. Operacionalización: Relatividades y Exportación a Excel
+
+Para llevar el modelo de un entorno de investigación a un entorno comercial, la salida del algoritmo de inferencia (GLM) debe transformarse en factores tarifarios aplicables por un área de suscripción (Underwriting).
+
+Al emplear una función de enlace logarítmica ($\ln(\lambda) = X\beta$), el efecto marginal de cada característica es multiplicativo. Aplicando la función exponencial a los coeficientes ($\beta$), se extraen las Relatividades Tarifarias ($e^{\beta_i}$).
+
+Para mitigar el riesgo operativo del copiado manual, el entorno de Python automatiza la serialización de esta matriz de relatividades hacia el formato Office Open XML (.xlsx). Este archivo sirve como el Back-End estático para la parametrización de cotizadores comerciales habilitados por macros (VBA) en Excel, cerrando el ciclo de ModelOps.
+
+6. Ecuación Comercial Final
 
 La salida de los algoritmos es la Prima Pura. La implementación en los sistemas de la aseguradora transiciona a la Prima Comercial (Office Premium) mediante la siguiente ecuación paramétrica que integra gastos y margen de solvencia:
 
 $$Prima\ Comercial = \frac{\hat{\lambda}(\mathbf{x}) \cdot \hat{\mu} + e_F}{1 - e_V - u}$$
 
-6. Reproducibilidad del Entorno
+7. Reproducibilidad del Entorno
 
 Para replicar los cálculos matemáticos, distribuciones y optimizaciones estocásticas de este proyecto:
 
